@@ -1,0 +1,15 @@
+{
+  "name": "simpread-read-later",
+  "version": "0.1.0",
+  "description": "utools plugin for search in simpread read later",
+  "main": "index.js",
+  "author": "SettingDust",
+  "license": "MIT",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "devDependencies": {
+    "fs-extra": "^10.0.0",
+    "utools-api-types": "^2.3.0"
+  }
+}

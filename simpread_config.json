@@ -1,0 +1,331 @@
+{
+  "version": "2.2.0",
+  "option": {
+    "annote": {
+      "autosave": false,
+      "color": 1,
+      "effect": "normal",
+      "event": "click",
+      "exp_mode": "",
+      "exp_name": "html",
+      "export": false,
+      "hypothes": false,
+      "keyboard": "Q Q",
+      "link": "[{{an_text}}]({{an_int_uri}})",
+      "off": false,
+      "order": "manual",
+      "savelocal": false,
+      "shortcuts": "M M",
+      "style": 0,
+      "trigger": true
+    },
+    "auto_mode": "read",
+    "automated": [],
+    "blacklist": [
+      "google.com",
+      "youtube.com",
+      "simp.red",
+      "simpread.herokuapp.com",
+      "simpread-test.herokuapp.com",
+      "simpread.ksria.cn",
+      "https://www.oschina.net/"
+    ],
+    "br_exit": false,
+    "create": "2021年11月25日 11:01:02",
+    "darkmode": "auto",
+    "esc": true,
+    "export": {
+      "custom": [],
+      "html": {
+        "layout": "normal",
+        "proxy": false,
+        "toc": false
+      },
+      "markdeep": {
+        "custom": false,
+        "template": ""
+      },
+      "markdown": {
+        "backlink": "",
+        "custom": false,
+        "ext_uri": "",
+        "format": "",
+        "int_uri": "",
+        "single": false,
+        "single_tmp": "",
+        "tag": "",
+        "tag_sep": "",
+        "template": ""
+      },
+      "title": {
+        "custom": false,
+        "template": ""
+      },
+      "webhooks": []
+    },
+    "lazyload": [
+      "baidu.com",
+      "weibo.com",
+      "youtube.com"
+    ],
+    "manual": {
+      "mode": "read",
+      "select": true,
+      "shortcuts": "S S",
+      "site": "confirm"
+    },
+    "menu": {
+      "blacklist": false,
+      "exclusion": false,
+      "focus": true,
+      "lazyload": false,
+      "link": false,
+      "list": true,
+      "manual": true,
+      "option": true,
+      "read": true,
+      "unrdist": true,
+      "whitelist": false
+    },
+    "notice": true,
+    "origins": [],
+    "plugins": [],
+    "preload": true,
+    "remote": {
+      "export": {
+        "attach": "none",
+        "epub": false,
+        "kindle": false,
+        "mail": false,
+        "pdf": false,
+        "plain": false
+      },
+      "parse": false,
+      "port": 7026,
+      "rss": false,
+      "sync": false
+    },
+    "save_at": "jianguo",
+    "secret": false,
+    "shortcuts": "enable",
+    "sync": "2021年11月25日 11:31:20",
+    "uninstall": true,
+    "unreader": {
+      "autoiframe": false,
+      "bottom": true,
+      "exports": {},
+      "mode": "annote",
+      "offline": false,
+      "openmode": "evergreen",
+      "sametheme": false,
+      "savelocal": false,
+      "savetype": "ofhtml",
+      "search": true,
+      "shortcuts": "D D",
+      "show": "senior",
+      "sidebar": true,
+      "theme": "default"
+    },
+    "update": "2021年11月25日 11:31:20",
+    "urlscheme": true,
+    "version": "2017-04-03"
+  },
+  "focus": {
+    "auto": false,
+    "bgcolor": "rgba( 235, 235, 235, 0.9 )",
+    "controlbar": true,
+    "highlight": true,
+    "mask": true,
+    "opacity": 90,
+    "shortcuts": "A S",
+    "version": "2016-12-29"
+  },
+  "read": {
+    "actionbar": {},
+    "auto": false,
+    "cleanup": true,
+    "controlbar": true,
+    "custom": {
+      "art": {
+        "color": "",
+        "fontFamily": "",
+        "fontSize": "",
+        "fontWeight": "",
+        "letterSpacing": "",
+        "lineHeight": "",
+        "textIndent": "",
+        "wordSpacing": ""
+      },
+      "code": {
+        "fontFamily": "",
+        "fontSize": ""
+      },
+      "css": "",
+      "desc": {
+        "color": "",
+        "fontFamily": "",
+        "fontSize": ""
+      },
+      "pre": {
+        "textShadow": ""
+      },
+      "title": {
+        "color": "",
+        "fontFamily": "",
+        "fontSize": ""
+      }
+    },
+    "exclusion": [
+      "v2ex.com",
+      "issue.github.com",
+      "readme.github.com",
+      "question.zhihu.com",
+      "douban.com",
+      "nationalgeographic.com.cn",
+      "tech.163.com",
+      "docs.microsoft.com",
+      "msdn.microsoft.com",
+      "baijia.baidu.com",
+      "code.oschina.net",
+      "http://www.ifanr.com",
+      "http://www.ifanr.com/news",
+      "http://www.ifanr.com/app",
+      "http://www.ifanr.com/minapp",
+      "http://www.ifanr.com/dasheng",
+      "http://www.ifanr.com/data",
+      "https://www.ifanr.com/app",
+      "http://www.ifanr.com/weizhizao",
+      "http://www.thepaper.cn",
+      "http://www.pingwest.com",
+      "http://tech2ipo.com",
+      "https://www.waerfa.com/social"
+    ],
+    "fap": true,
+    "fap_layout": "list",
+    "fontfamily": "default",
+    "fontsize": "",
+    "highlight": true,
+    "layout": "",
+    "lazyimg": true,
+    "progress": false,
+    "pure": true,
+    "shortcuts": "A A",
+    "theme": "github",
+    "toc": true,
+    "toc_hide": true,
+    "version": "2017-03-16",
+    "whitelist": []
+  },
+  "websites": {
+    "custom": [],
+    "local": [],
+    "person": []
+  },
+  "statistics": {
+    "read": 3
+  },
+  "user": {
+    "avatar": "",
+    "contact": "",
+    "email": "",
+    "name": "",
+    "rule": 2,
+    "uid": ""
+  },
+  "notice": {
+    "latest": 0,
+    "read": [],
+    "unsee": 0
+  },
+  "unrdist": [
+    {
+      "annotations": [
+        {
+          "annote": "",
+          "color": 1,
+          "html": "",
+          "id": 1637810725538,
+          "items": [],
+          "note": "这是对代码段的标注",
+          "style": 0,
+          "tags": [
+            "我是标签",
+            "我是代码端的标签"
+          ],
+          "text": "POST HTTP/1.1\nURL: https://simpread.ksria.cn/api/service/add\nAccept: application/json\nContent-Type: application/json\n\nHeaders:\n{\n  token: <你的 token>\n}\n\nBody:\n{\n  \"url\": \"example.com\", // 必填\n  \"title\": \"测试\", // 尽量填写\n  \"desc\": \"描述内容\", // 选填\n  \"tags\": \"标签\", // 选填，e.g. 收件箱/<来源> → 收件箱/iOS 收件箱/Pocket 收件箱/Telegram\n  \"note\": \"备注\", // 选填\n}\n\nResponse:\n{\n  \"code\": 201 // 建立成功\n  \"code\": -1  // 服务器错误\n  \"code\": 401 // 未找到 Token 或当前用户不是高级账户\n  \"code\": 404 // 未授权任何服务\n  \"code\": 403 // 未授权坚果云\n}\n",
+          "type": "code"
+        }
+      ],
+      "create": "2021年11月25日 11:25:20",
+      "desc": "简悦 SimpRead - 如杂志般沉浸式阅读体验的扩展",
+      "favicon": "",
+      "idx": 1,
+      "img": "http://sr.ksria.cn/introduce-2.png",
+      "note": "",
+      "tags": [],
+      "title": "API 文档",
+      "url": "https://simpread.pro/api/#/api"
+    },
+    {
+      "annotations": [
+        {
+          "annote": "<sr-annote data-id=\"1637809647903\">如果说同步助手让简悦具有本地管理功能，那 </sr-annote><sr-annote data-id=\"1637809647903\">API 2.0</sr-annote><sr-annote data-id=\"1637809647903\"> 的发布则让简悦拥有了线上服务的功能，同时本着开放的态度，用户可以完全脱离简悦的稍后读服务而仅仅把它当作个人数据库来使用。</sr-annote>",
+          "color": 1,
+          "html": "如果说同步助手让简悦具有本地管理功能，那 <a href=\"https://zhuanlan.zhihu.com/p/432066109\" target=\"_blank\">API 2.0</a> 的发布则让简悦拥有了线上服务的功能，同时本着开放的态度，用户可以完全脱离简悦的稍后读服务而仅仅把它当作个人数据库来使用。",
+          "id": 1637809647903,
+          "items": [
+            {
+              "root": "如果说同步助手让简悦具有本地管理功能，那 API 2.0 的发布则让简悦拥有了线上服务的功能，同时本着开放的态度，用户可以完全脱离简悦的稍后读服务而仅仅把它当作个人数据库来使用。",
+              "str": "如果说同步助手让简悦具有本地管理功能，那 "
+            },
+            {
+              "root": "如果说同步助手让简悦具有本地管理功能，那 API 2.0 的发布则让简悦拥有了线上服务的功能，同时本着开放的态度，用户可以完全脱离简悦的稍后读服务而仅仅把它当作个人数据库来使用。",
+              "str": "API 2.0"
+            },
+            {
+              "root": "如果说同步助手让简悦具有本地管理功能，那 API 2.0 的发布则让简悦拥有了线上服务的功能，同时本着开放的态度，用户可以完全脱离简悦的稍后读服务而仅仅把它当作个人数据库来使用。",
+              "str": " 的发布则让简悦拥有了线上服务的功能，同时本着开放的态度，用户可以完全脱离简悦的稍后读服务而仅仅把它当作个人数据库来使用。"
+            }
+          ],
+          "note": "我是标注的备注",
+          "refs": "https://sspai.com/post/66995",
+          "style": 0,
+          "tags": [
+            "我是标注的标签"
+          ],
+          "text": "如果说同步助手让简悦具有本地管理功能，那 API 2.0 的发布则让简悦拥有了线上服务的功能，同时本着开放的态度，用户可以完全脱离简悦的稍后读服务而仅仅把它当作个人数据库来使用。",
+          "type": "paragraph"
+        },
+        {
+          "annote": "",
+          "color": 2,
+          "html": "",
+          "id": 1637809734225,
+          "items": [],
+          "note": "我是图片的备注",
+          "style": 0,
+          "tags": [
+            "我是图片的标签"
+          ],
+          "text": "https://cdn.sspai.com/2021/11/17/e439129ad768ddba95152117c71833f6.png",
+          "type": "img"
+        }
+      ],
+      "create": "2021年11月25日 11:03:48",
+      "desc": "这是个信息轰炸的时代，除了必要的信息过滤手段外，每个人都应该构建属于自己的个人知识库。",
+      "favicon": "//res.wx.qq.com/a/wx_fed/assets/res/NTI4MWU5.ico",
+      "idx": 0,
+      "img": "https://cdn.sspai.com/2021/11/17/365ff29b5ab274691d99b1417912aade.png",
+      "note": "我是稍后读的标注",
+      "refs": "https://sspai.com/post/67667\nhttps://sspai.com/post/61996",
+      "tags": [
+        "我是标签",
+        "嵌套标签1/嵌套标签2/嵌套标签3"
+      ],
+      "title": "本地存储 + 线上获取：我的个人数据库建构路径",
+      "url": "https://sspai.com/post/69972"
+    }
+  ],
+  "collections": [],
+  "plugstorge": {}
+}

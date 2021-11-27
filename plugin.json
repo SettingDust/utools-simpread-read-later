@@ -1,0 +1,32 @@
+{
+  "pluginName": "Simpread Read Later",
+  "description": "Searching for simpread read later",
+  "version": "0.1.12",
+  "author": "SettingDust",
+  "logo": "logo.png",
+  "update": false,
+  "preload": "preload.js",
+  "pluginSetting": {
+    "single": true
+  },
+  "features": [
+    {
+      "code": "simpread-read-later",
+      "explain": "稍后读搜索",
+      "cmds": [
+        "sr",
+        "sir",
+        "simpread"
+      ]
+    },
+    {
+      "code": "simpread-read-later-config",
+      "explain": "简悦配置文件路径",
+      "cmds": [
+        "src",
+        "sirc",
+        "simpread-config"
+      ]
+    }
+  ]
+}
