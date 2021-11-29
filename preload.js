@@ -107,6 +107,7 @@ window.exports = {
           config.configPath = itemData.configPath
           utools.db.put(config)
           watcher?.close()
+          loadConfig(JSON.parse(fs.readFileSync(itemData.configPath, {encoding: 'utf8'})))
           watcher = fs.watch(itemData.configPath,
             () => loadConfig(JSON.parse(fs.readFileSync(itemData.configPath, {encoding: 'utf8'})))
           )
