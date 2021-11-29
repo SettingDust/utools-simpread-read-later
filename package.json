@@ -11,5 +11,8 @@
   "devDependencies": {
     "fs-extra": "^10.0.0",
     "utools-api-types": "^2.3.0"
+  },
+  "dependencies": {
+    "escape-string-regexp": "4"
   }
 }

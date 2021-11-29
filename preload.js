@@ -1,16 +1,61 @@
 const fs = require("fs")
+const escapeStringRegexp = require("escape-string-regexp")
 
 let readLaterData = {}
 let port = 7026
 const LOGO_URL = 'https://simpread-1254315611.cos.ap-shanghai.myqcloud.com/mobile/apple-icon-180x180.png'
 let watcher
 
+function loadConfig(json) {
+  const {option, unrdist: articles} = json
+  port = option.remote.port
+  readLaterData = articles.map(it => {
+    let favicon
+    if (it.favicon?.length) {
+      if (it.favicon.startsWith("//")) {
+        favicon = `http:${it.favicon}`
+      } else if (it.favicon.startsWith("/")) {
+        favicon = LOGO_URL
+      } else {
+        favicon = it.favicon
+      }
+    } else {
+      favicon = LOGO_URL
+    }
+    return {
+      id: it.idx,
+      title: it.title,
+      description: it.desc ?? '',
+      note: it.note ?? '',
+      icon: favicon,
+      url: it.url.startsWith("/") ? `http:${it.url}` : it.url,
+      tags: it.tags,
+      annotations: it.annotations?.map(annotation => ({
+        id: annotation.id,
+        note: annotation.note,
+        tags: annotation.tags
+      }))
+    }
+  })
+}
+
+utools.onPluginReady(() => {
+  const {configPath} = utools.db.get("config") ?? {_id: "config"}
+  if (configPath) {
+    loadConfig(JSON.parse(fs.readFileSync(configPath, {encoding: 'utf8'})))
+    watcher = fs.watch(configPath,
+      () => {
+        loadConfig(JSON.parse(fs.readFileSync(configPath, {encoding: 'utf8'})))
+      }
+    )
+  }
+})
+
 window.exports = {
   "simpread-read-later": {
     mode: "list",
     args: {
       enter: (action, callbackSetList) => {
-        console.log(123)
         const {configPath} = utools.db.get("config") ?? {_id: "config"}
         if (!configPath) {
           callbackSetList([{
@@ -27,24 +72,25 @@ window.exports = {
             if (it.startsWith("#")) return it.slice(1); else return it
           })
           let tempList = readLaterData
-          searchTags.forEach(keyword => {
+          searchTags.map(keyword => new RegExp(escapeStringRegexp(keyword), "i")).forEach(regex => {
             tempList = tempList
               .filter(it =>
-                it.tags?.some(tag => tag.includes(keyword)) ||
-                it.annotations?.some(annotation => annotation.tags.some(tag => tag.includes(keyword)))
+                it.tags?.some(tag => regex.test(tag)) ||
+                it.annotations?.some(annotation => annotation.tags.some(tag => regex.test(tag)))
               )
           })
           callbackSetList(tempList)
         } else {
           const searchWords = searchWord.split(" ")
           let tempList = readLaterData
-          searchWords.forEach(keyword => {
+          searchWords.map(it => new RegExp(escapeStringRegexp(it), "i")).forEach(regex => {
             tempList = tempList
               .filter(it =>
-                it.title.includes(keyword) ||
-                it.description?.includes(keyword) ||
-                it.note?.includes(keyword) ||
-                it.annotations?.some(annotation => annotation.note.includes(keyword))
+                regex.test(it.title) ||
+                regex.test(it.description) ||
+                regex.test(it.note) ||
+                regex.test(it.url) ||
+                it.annotations?.some(annotation => regex.test(annotation.note))
               )
           })
           callbackSetList(tempList)
@@ -121,50 +167,3 @@ window.exports = {
     }
   }
 }
-
-function loadConfig(json) {
-  const {option, unrdist: articles} = json
-  port = option.remote.port
-  readLaterData = articles.map(it => {
-    let favicon
-    if (it.favicon?.length) {
-      if (it.favicon.startsWith("//")) {
-        favicon = `http:${it.favicon}`
-      } else if (it.favicon.startsWith("/")) {
-        favicon = LOGO_URL
-      } else {
-        favicon = it.favicon
-      }
-    } else {
-      favicon = LOGO_URL
-    }
-    return {
-      id: it.idx,
-      title: it.title,
-      description: it.desc ?? '',
-      note: it.note ?? '',
-      icon: favicon,
-      url: it.url.startsWith("/") ? `http:${it.url}` : it.url,
-      tags: it.tags,
-      annotations: it.annotations?.map(annotation => ({
-        id: annotation.id,
-        note: annotation.note,
-        tags: annotation.tags
-      }))
-    }
-  })
-}
-
-utools.onPluginReady(() => {
-  utools.setSubInput()
-
-  const {configPath} = utools.db.get("config") ?? {_id: "config"}
-  if (configPath) {
-    loadConfig(JSON.parse(fs.readFileSync(configPath, {encoding: 'utf8'})))
-    watcher = fs.watch(configPath,
-      () => {
-        loadConfig(JSON.parse(fs.readFileSync(configPath, {encoding: 'utf8'})))
-      }
-    )
-  }
-})

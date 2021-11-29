@@ -239,6 +239,15 @@
   },
   "unrdist": [
     {
+      "create": "2021年11月25日 11:31:20",
+      "desc": "我希望简悦不仅是一个工具，它更应该是你的信息获取助理，是建立在信息与笔记之间的桥梁，是建立在原始网页与生产力工具之间的桥梁。",
+      "favicon": "https://cdn.sspai.com/sspai/assets/img/favicon/icon.ico",
+      "idx": 2,
+      "img": "https://cdn.sspai.com/article/053250ba-a755-1fb8-25d7-d96ca0aa7b31.png",
+      "title": "看板、双向链接、知识图谱…… 简悦 2.2 想让你的稍后读不再不读",
+      "url": "https://sspai.com/post/67074"
+    },
+    {
       "annotations": [
         {
           "annote": "",
