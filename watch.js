@@ -4,9 +4,11 @@ require('esbuild')
     bundle: true,
     outfile: 'index.js',
     platform: 'node',
-    target: 'node16'
+    target: 'node16',
+    sourcemap: true,
+    watch: true
   })
   .catch((err) => {
-      console.error(err)
-      process.exit(1)
+    console.error(err)
+    process.exit(1)
   })

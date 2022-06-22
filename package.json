@@ -6,13 +6,19 @@
   "author": "SettingDust",
   "license": "MIT",
   "scripts": {
-    "build": "node build.js"
+    "format": "prettier --write **/*.{ts,html}",
+    "build": "node build.js",
+    "watch": "node watch.js"
   },
   "devDependencies": {
-    "fs-extra": "^10.0.0",
-    "utools-api-types": "^2.3.0"
+    "@types/node": "^18.0.0",
+    "prettier": "^2.7.1",
+    "utools-api-types": "^2.6.4"
   },
   "dependencies": {
-    "escape-string-regexp": "4"
+    "electron": "^19.0.5",
+    "esbuild": "^0.14.47",
+    "escape-string-regexp": "5",
+    "normalize-url": "^7.0.3"
   }
 }

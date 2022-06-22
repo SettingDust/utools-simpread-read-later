@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "ES2020",
+    "target": "ES2020",
+    "sourceMap": true,
+    "moduleResolution": "Node",
+    "types": [
+      "utools-api-types",
+      "node"
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
