@@ -1,17 +1,28 @@
 import { AppName } from 'open'
 
-interface Config {
-  configPath: string
+export interface Config {
+  configPath?: string
   useUrlScheme: boolean
-  browser: AppName | string
+  browser?: AppName | string
 }
+
+export type Keys = keyof Config
 
 export let data: Config
 
-export const readable = {
-  configPath: '配置文件路径',
-  useUrlScheme: '使用 URL Scheme',
-  browser: '浏览器（firefox、edge、chrome 等）'
+export const translations = {
+  configPath: {
+    title: '简悦配置文件路径',
+    hint: '请输入 simpread.json 文件路径'
+  },
+  useUrlScheme: {
+    title: '是否使用 URL Scheme',
+    hint: '请输入 true 或 false（缺省为 true）'
+  },
+  browser: {
+    title: '浏览器',
+    hint: '请输入 firefox、edge、chrome、完整路径'
+  }
 }
 
 export function load() {
@@ -21,4 +32,6 @@ export function load() {
     useUrlScheme: true,
     ...utools.db.get('config')
   }
+  delete data['_id']
+  delete data['_rev']
 }

@@ -1,4 +1,4 @@
-import { Simpread } from './simpread'
+import { Simpread } from './types/simpread'
 import normalizeUrl from 'normalize-url'
 import { FSWatcher, readFileSync, watch } from 'fs'
 
@@ -6,7 +6,7 @@ const DEFAULT_ICON = 'https://simpread-1254315611.cos.ap-shanghai.myqcloud.com/m
 
 export const filterBlank = (input: string): string | null => input?.trim() ?? null
 
-interface Article {
+export interface Article {
   id: number
   title: string
   description: string

@@ -1,6 +1,7 @@
-const { copySync } = require('fs-extra')
+const { copySync, removeSync } = require('fs-extra')
 const paths = ['logo.png', 'plugin.json']
 
+removeSync('dist')
 paths.forEach((path) => copySync(path, `dist/${path}`, {}))
 
 require('esbuild')

@@ -4,9 +4,11 @@
     "target": "ES2020",
     "sourceMap": true,
     "moduleResolution": "Node",
+    "esModuleInterop": true,
     "types": [
       "utools-api-types",
-      "node"
+      "node",
+      "./utools.d.ts"
     ]
   },
   "exclude": [

@@ -1,27 +1,29 @@
 import escapeStringRegexp from 'escape-string-regexp'
 import * as config from './config'
 import * as simpread from './simpread-config'
+import { ListExport } from './types/utools'
+import open from 'open'
 
 config.load()
 simpread.load(config.data.configPath)
 
-window.exports = {
+const exports: {
+  'simpread-read-later': ListExport<undefined, simpread.Article>
+  'simpread-read-later-config': ListExport<undefined, { key: config.Keys }>
+  'simpread-read-later-config-set': ListExport<config.Keys | undefined, { value: any }>
+} = {
   'simpread-read-later': {
     mode: 'list',
     args: {
-      enter: (_: any, callback: (arg: any[]) => void) => {
+      enter: (_, callback) => {
         const path = simpread.filterBlank(utools.db.get('config')?.configPath)
-        if (!path)
-          callback([
-            {
-              title: '请设置配置文件路径',
-              description: '使用 src 指令配置',
-              needConfig: true
-            }
-          ])
+        if (!path) {
+          utools.outPlugin()
+          utools.redirect('简悦配置设置', 'configPath')
+        }
         else callback(simpread.data)
       },
-      search: (_, input: string, callback: (arg: any[]) => void) => {
+      search: (_, input: string, callback) => {
         if (input.startsWith('#')) {
           const tags: string[] = input.split(' ').map((it) => (it.startsWith('#') ? it.slice(1) : it))
           let result = simpread.data
@@ -55,85 +57,98 @@ window.exports = {
           callback(result)
         }
       },
-      // 用户选择列表中某个条目时被调用
       select: async (action, item) => {
-        if (item.needConfig) {
-          utools.redirect('simpread-config', '')
-          return
-        }
         const url = `simpread://open?type=unread&idx=${item.id}`
-        await utools.shellOpenExternal(url)
+        await open(url, { app: { name: config.data.browser } })
       },
-      // 子输入框为空时的占位符，默认为字符串'搜索'
       placeholder: '输入搜索内容，# 开头搜索标签'
     }
   },
   'simpread-read-later-config': {
     mode: 'list',
     args: {
-      enter: (action, callback) => {
+      enter: (_, callback) => {
         callback(
-          Object.keys(config.data).map((key) => ({
-            title: config.readable[key] ?? '未知设置',
-            description: config.data[key],
-            key
-          }))
+          Object.entries(config.data).map(([key, value]) => {
+            const translation = config.translations[key]
+            return {
+              title: translation.title,
+              description: value !== undefined ? value.toString() : translation.hint,
+              key: key
+            }
+          })
         )
       },
-      search: (action, input, callback) => {
+      search: (_, input, callback) => {
         const regex = new RegExp(escapeStringRegexp(input), 'i')
         callback(
-          Object.keys(config.data)
-            .filter((it) => regex.test(it) || regex.test(config.readable[it]))
-            .map((key) => ({
-              title: config.readable[key] ?? '未知设置',
-              description: config.data[key],
-              key
-            }))
+          Object.entries(config.data)
+            .filter(
+              ([key, value]) => regex.test(key) || regex.test(value) || regex.test(config.translations[key].title)
+            )
+            .map(([key, value]) => {
+              const translation = config.translations[key]
+              return {
+                title: translation.title,
+                description: value !== undefined ? value.toString() : translation.hint,
+                key: key
+              }
+            })
         )
-
-        if (input.length)
-          try {
-            require(input)
-            callback([
-              {
-                title: '设为配置文件路径',
-                description: input,
-                configPath: input
-              }
-            ])
-          } catch (e) {
-            callback([
-              {
-                title: `配置文件无效 ${e.message}`,
-                description: input
-              }
-            ])
-          }
-        else {
-          const configPath = utools.db.get('config')?.configPath
+      },
+      // 用户选择列表中某个条目时被调用
+      select: (_, item) => utools.redirect('简悦配置设置', item.key),
+      placeholder: '点击选择配置项'
+    }
+  },
+  'simpread-read-later-config-set': {
+    mode: 'list',
+    args: {
+      enter: (action, callback) => {
+        if (action.payload) {
+          const value = config.data[action.payload]
+          const translation = config.translations[action.payload]
+          if (value !== undefined) utools.setSubInputValue(value.toString())
           callback([
             {
-              title: configPath ? '当前配置文件路径' : '请在搜索栏输入配置文件路径',
-              description: configPath
+              title: translation.title,
+              description: value !== undefined ? value.toString() : translation.hint
+            }
+          ])
+        } else
+          callback([
+            {
+              title: '未选择配置项'
+            }
+          ])
+      },
+      search: (action, input, callback) => {
+        if (action.payload) {
+          const value = config.data[action.payload]
+          const translation = config.translations[action.payload]
+          if (value !== undefined) utools.setSubInputValue(value.toString())
+          callback([
+            {
+              title: translation.title,
+              description: value !== undefined ? value.toString() : translation.hint,
+              value: input
             }
           ])
         }
       },
-      // 用户选择列表中某个条目时被调用
       select: (action, item) => {
-        if (item.configPath) {
+        if (action.payload && item.value) {
           const localConfig = utools.db.get('config') ?? { _id: 'config' }
-          localConfig.configPath = item.configPath
+          localConfig[action.payload] = item.value
           utools.db.put(localConfig)
-          config.load(localConfig.configPath)
-          utools.redirect('simpread', '')
+          config.load()
+          utools.redirect('简悦配置', '')
           return
         }
-        utools.redirect('simpread-config', '')
       },
-      // 子输入框为空时的占位符，默认为字符串"搜索"
       placeholder: '配置值'
     }
   }
 }
+
+window.exports = exports

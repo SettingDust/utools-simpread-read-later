@@ -16,16 +16,26 @@
       "cmds": [
         "sr",
         "sir",
-        "simpread"
+        "简悦"
       ]
     },
     {
       "code": "simpread-read-later-config",
-      "explain": "简悦配置文件路径",
+      "explain": "简悦配置",
       "cmds": [
         "src",
         "sirc",
-        "simpread-config"
+        "简悦配置"
+      ]
+    },
+    {
+      "code": "simpread-read-later-config-set",
+      "explain": "简悦配置设置",
+      "cmds": [
+        {
+          "type": "over",
+          "label": "简悦配置设置"
+        }
       ]
     }
   ]
