@@ -3,9 +3,8 @@ import * as config from './config'
 import * as simpread from './simpread-config'
 import { ListExport } from './types/utools'
 import open from 'open'
-
-config.load()
-simpread.load(config.data.configPath)
+import normalizeUrl from 'normalize-url'
+import { filterBlank } from './simpread-config'
 
 const exports: {
   'simpread-read-later': ListExport<undefined, simpread.Article>
@@ -16,11 +15,9 @@ const exports: {
     mode: 'list',
     args: {
       enter: (_, callback) => {
-        const path = simpread.filterBlank(utools.db.get('config')?.configPath)
-        if (!path) {
-          utools.outPlugin()
-          utools.redirect('简悦配置设置', 'configPath')
-        } else callback(simpread.data)
+        if (!simpread.filterBlank(utools.db.get('config')?.configPath))
+          setTimeout(() => utools.redirect('简悦配置设置', 'configPath'))
+        else callback(simpread.data)
       },
       search: (_, input: string, callback) => {
         if (input.startsWith('#')) {
@@ -109,7 +106,7 @@ const exports: {
         if (action.payload) {
           const value = config.data[action.payload]
           const translation = config.translations[action.payload]
-          if (value !== undefined) utools.setSubInputValue(value.toString())
+          if (value !== undefined) setTimeout(() => utools.setSubInputValue(value.toString()))
           callback([
             {
               title: translation.title,
@@ -124,24 +121,45 @@ const exports: {
           ])
       },
       search: (action, input, callback) => {
-        if (action.payload) {
+        input = filterBlank(input)
+        if (action.payload && input) {
           const value = config.data[action.payload]
           const translation = config.translations[action.payload]
-          if (value !== undefined) utools.setSubInputValue(value.toString())
-          callback([
-            {
-              title: translation.title,
-              description: value !== undefined ? value.toString() : translation.hint,
-              value: input
+          if (action.payload === 'configPath') {
+            try {
+              require(input)
+              callback([
+                {
+                  title: translation.title,
+                  description: value !== undefined ? value.toString() : translation.hint,
+                  value: input
+                }
+              ])
+            } catch (e) {
+              callback([
+                {
+                  title: `配置文件无效 ${e.message}`,
+                  description: input
+                }
+              ])
             }
-          ])
+          } else
+            callback([
+              {
+                title: translation.title,
+                description: value !== undefined ? value.toString() : translation.hint,
+                value: input
+              }
+            ])
         }
       },
       select: (action, item) => {
         if (action.payload && item.value) {
           const localConfig = utools.db.get('config') ?? { _id: 'config' }
+          if (action.payload === 'prefixUrl') item.value = normalizeUrl(item.value)
           localConfig[action.payload] = item.value
           utools.db.put(localConfig)
+          if (action.payload === 'configPath') simpread.load(item.value)
           config.load()
           utools.redirect('简悦配置', '')
           return
@@ -153,3 +171,6 @@ const exports: {
 }
 
 window.exports = exports
+
+config.load()
+simpread.load(config.data.configPath)

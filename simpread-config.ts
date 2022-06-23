@@ -36,9 +36,11 @@ const fetchArticle = (config: Simpread.Config): Article[] =>
 let watcher: FSWatcher
 
 const readConfig = (path: string) => {
-  const simpreadConfig: Simpread.Config = JSON.parse(readFileSync(path, { encoding: 'utf-8' }))
-  data = fetchArticle(simpreadConfig)
-  port = simpreadConfig.option.remote.port
+  try {
+    const simpreadConfig: Simpread.Config = require(path)
+    data = fetchArticle(simpreadConfig)
+    port = simpreadConfig.option.remote.port
+  } catch (ignored) {}
 }
 
 export let data: Article[]
