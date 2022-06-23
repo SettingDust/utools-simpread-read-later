@@ -9,7 +9,7 @@ require('esbuild')
     outfile: 'dist/index.js',
     platform: 'node',
     target: 'node16',
-    sourcemap: true,
+    sourcemap: 'inline',
     watch: true
   })
   .catch((err) => {

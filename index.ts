@@ -5,7 +5,6 @@ import { ListExport } from './types/utools'
 import open from 'open'
 import normalizeUrl from 'normalize-url'
 import { filterBlank } from './simpread-config'
-import { readFileSync } from 'fs'
 
 const exports: {
   'simpread-read-later': ListExport<undefined, simpread.Article>
@@ -127,7 +126,7 @@ const exports: {
           const translation = config.translations[action.payload]
           if (action.payload === 'configPath') {
             try {
-              JSON.parse(readFileSync(input, { encoding: 'utf8' }))
+              require(input)
               callback([
                 {
                   title: translation.title,
