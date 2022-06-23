@@ -1,6 +1,6 @@
 import { Simpread } from './types/simpread'
 import normalizeUrl from 'normalize-url'
-import { FSWatcher, watch } from 'fs'
+import { FSWatcher, readFileSync, watch } from 'fs'
 
 const DEFAULT_ICON = 'https://simpread-1254315611.cos.ap-shanghai.myqcloud.com/mobile/apple-icon-180x180.png'
 
@@ -40,7 +40,7 @@ let watcher: FSWatcher
 
 const readConfig = (path: string) => {
   try {
-    const simpreadConfig: Simpread.Config = require(path)
+    const simpreadConfig: Simpread.Config = JSON.parse(readFileSync(path, { encoding: 'utf8' }))
     data = fetchArticle(simpreadConfig)
     port = simpreadConfig.option.remote.port
   } catch (ignored) {}

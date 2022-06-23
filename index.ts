@@ -5,6 +5,7 @@ import { ListExport } from './types/utools'
 import open from 'open'
 import normalizeUrl from 'normalize-url'
 import { filterBlank } from './simpread-config'
+import { readFileSync } from 'fs'
 
 const exports: {
   'simpread-read-later': ListExport<undefined, simpread.Article>
@@ -71,7 +72,7 @@ const exports: {
             const translation = config.translations[key]
             return {
               title: translation.title,
-              description: filterBlank(value.toString()) ?? translation.hint,
+              description: filterBlank(value?.toString()) ?? translation.hint,
               key: key
             }
           })
@@ -88,7 +89,7 @@ const exports: {
               const translation = config.translations[key]
               return {
                 title: translation.title,
-                description: filterBlank(value.toString()) ?? translation.hint,
+                description: filterBlank(value?.toString()) ?? translation.hint,
                 key: key
               }
             })
@@ -110,7 +111,7 @@ const exports: {
           callback([
             {
               title: translation.title,
-              description: value !== undefined ? value.toString() : translation.hint
+              description: filterBlank(value?.toString()) ?? translation.hint
             }
           ])
         } else
@@ -126,11 +127,11 @@ const exports: {
           const translation = config.translations[action.payload]
           if (action.payload === 'configPath') {
             try {
-              require(input)
+              JSON.parse(readFileSync(input, { encoding: 'utf8' }))
               callback([
                 {
                   title: translation.title,
-                  description: filterBlank(value.toString()) ?? translation.hint,
+                  description: filterBlank(value?.toString()) ?? translation.hint,
                   value: input
                 }
               ])
@@ -146,7 +147,7 @@ const exports: {
             callback([
               {
                 title: translation.title,
-                description: filterBlank(value.toString()) ?? translation.hint,
+                description: filterBlank(value?.toString()) ?? translation.hint,
                 value: input
               }
             ])
@@ -156,6 +157,7 @@ const exports: {
         if (action.payload) {
           const localConfig = utools.db.get('config') ?? { _id: 'config' }
           if (action.payload === 'prefixUrl') item.value = normalizeUrl(item.value)
+          if (action.payload === 'useUrlScheme') item.value = item.value !== 'false'
           localConfig[action.payload] = item.value
           utools.db.put(localConfig)
           if (action.payload === 'configPath') simpread.load(item.value)
