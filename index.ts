@@ -56,7 +56,7 @@ const exports: {
       select: async (action, item) => {
         const url = config.data.useUrlScheme
           ? `simpread://open?type=unread&idx=${item.id}`
-          : `${config.data.prefixUrl}/${simpread.port}/${item.id}`
+          : `${config.data.prefixUrl}:${simpread.port}/${item.id}`
         await open(url, { app: { name: config.data.browser } })
       },
       placeholder: '输入搜索内容，# 开头搜索标签'
