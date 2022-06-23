@@ -22,7 +22,7 @@ export const translations = {
   },
   browser: {
     title: '浏览器',
-    hint: '请输入 firefox、edge、chrome、完整路径'
+    hint: '请输入 firefox、edge、chrome、完整路径，默认调用默认浏览器'
   },
   prefixUrl: {
     title: 'URL 前缀',

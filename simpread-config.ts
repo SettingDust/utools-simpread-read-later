@@ -1,10 +1,13 @@
 import { Simpread } from './types/simpread'
 import normalizeUrl from 'normalize-url'
-import { FSWatcher, readFileSync, watch } from 'fs'
+import { FSWatcher, watch } from 'fs'
 
 const DEFAULT_ICON = 'https://simpread-1254315611.cos.ap-shanghai.myqcloud.com/mobile/apple-icon-180x180.png'
 
-export const filterBlank = (input: string): string | null => input?.trim() ?? null
+export const filterBlank = (input: string): string | undefined => {
+  const trimmed = input?.trim()
+  return trimmed?.length ? trimmed : undefined
+}
 
 export interface Article {
   id: number

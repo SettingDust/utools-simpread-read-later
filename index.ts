@@ -71,7 +71,7 @@ const exports: {
             const translation = config.translations[key]
             return {
               title: translation.title,
-              description: value !== undefined ? value.toString() : translation.hint,
+              description: filterBlank(value.toString()) ?? translation.hint,
               key: key
             }
           })
@@ -88,7 +88,7 @@ const exports: {
               const translation = config.translations[key]
               return {
                 title: translation.title,
-                description: value !== undefined ? value.toString() : translation.hint,
+                description: filterBlank(value.toString()) ?? translation.hint,
                 key: key
               }
             })
@@ -121,8 +121,7 @@ const exports: {
           ])
       },
       search: (action, input, callback) => {
-        input = filterBlank(input)
-        if (action.payload && input) {
+        if (action.payload) {
           const value = config.data[action.payload]
           const translation = config.translations[action.payload]
           if (action.payload === 'configPath') {
@@ -131,7 +130,7 @@ const exports: {
               callback([
                 {
                   title: translation.title,
-                  description: value !== undefined ? value.toString() : translation.hint,
+                  description: filterBlank(value.toString()) ?? translation.hint,
                   value: input
                 }
               ])
@@ -147,14 +146,14 @@ const exports: {
             callback([
               {
                 title: translation.title,
-                description: value !== undefined ? value.toString() : translation.hint,
+                description: filterBlank(value.toString()) ?? translation.hint,
                 value: input
               }
             ])
         }
       },
       select: (action, item) => {
-        if (action.payload && item.value) {
+        if (action.payload) {
           const localConfig = utools.db.get('config') ?? { _id: 'config' }
           if (action.payload === 'prefixUrl') item.value = normalizeUrl(item.value)
           localConfig[action.payload] = item.value
