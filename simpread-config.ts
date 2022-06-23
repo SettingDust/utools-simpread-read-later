@@ -17,7 +17,7 @@ export interface Article {
   annotations: Simpread.Annotation[]
 }
 
-const transformConfig = (config: Simpread.Config): Article[] =>
+const fetchArticle = (config: Simpread.Config): Article[] =>
   config.unrdist.map((it) => ({
     id: it.idx,
     title: it.title,
@@ -35,9 +35,15 @@ const transformConfig = (config: Simpread.Config): Article[] =>
 
 let watcher: FSWatcher
 
-const readConfig = (path: string) => (data = transformConfig(JSON.parse(readFileSync(path, { encoding: 'utf-8' }))))
+const readConfig = (path: string) => {
+  const simpreadConfig: Simpread.Config = JSON.parse(readFileSync(path, { encoding: 'utf-8' }))
+  data = fetchArticle(simpreadConfig)
+  port = simpreadConfig.option.remote.port
+}
 
 export let data: Article[]
+
+export let port: number = 7026
 
 export function load(path?: string) {
   watcher?.close()

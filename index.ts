@@ -20,8 +20,7 @@ const exports: {
         if (!path) {
           utools.outPlugin()
           utools.redirect('简悦配置设置', 'configPath')
-        }
-        else callback(simpread.data)
+        } else callback(simpread.data)
       },
       search: (_, input: string, callback) => {
         if (input.startsWith('#')) {
@@ -58,7 +57,9 @@ const exports: {
         }
       },
       select: async (action, item) => {
-        const url = `simpread://open?type=unread&idx=${item.id}`
+        const url = config.data.useUrlScheme
+          ? `simpread://open?type=unread&idx=${item.id}`
+          : `${config.data.prefixUrl}/${simpread.port}/${item.id}`
         await open(url, { app: { name: config.data.browser } })
       },
       placeholder: '输入搜索内容，# 开头搜索标签'

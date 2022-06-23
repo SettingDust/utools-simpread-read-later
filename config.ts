@@ -4,6 +4,7 @@ export interface Config {
   configPath?: string
   useUrlScheme: boolean
   browser?: AppName | string
+  prefixUrl: string
 }
 
 export type Keys = keyof Config
@@ -22,6 +23,10 @@ export const translations = {
   browser: {
     title: '浏览器',
     hint: '请输入 firefox、edge、chrome、完整路径'
+  },
+  prefixUrl: {
+    title: 'URL 前缀',
+    hint: '只有 useUrlScheme 为 false 时有效，默认为 http://localhost'
   }
 }
 
@@ -30,6 +35,7 @@ export function load() {
     browser: undefined,
     configPath: undefined,
     useUrlScheme: true,
+    prefixUrl: 'http://localhost',
     ...utools.db.get('config')
   }
   delete data['_id']

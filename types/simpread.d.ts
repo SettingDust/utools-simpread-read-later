@@ -19,6 +19,11 @@ export namespace Simpread {
   }
 
   export interface Config {
+    option: {
+      remote: {
+        port: number
+      }
+    }
     unrdist: Article[]
   }
 }
