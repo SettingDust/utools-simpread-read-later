@@ -1,14 +1,16 @@
 import escapeStringRegexp from 'escape-string-regexp'
 import * as config from './config'
+import * as simpread from './simpread-config'
 
-config.load(utools.db.get('config')?.configPath)
+config.load()
+simpread.load(config.data.configPath)
 
 window.exports = {
   'simpread-read-later': {
     mode: 'list',
     args: {
       enter: (_: any, callback: (arg: any[]) => void) => {
-        const path = config.filterBlank(utools.db.get('config')?.configPath)
+        const path = simpread.filterBlank(utools.db.get('config')?.configPath)
         if (!path)
           callback([
             {
@@ -17,15 +19,12 @@ window.exports = {
               needConfig: true
             }
           ])
-        else {
-          console.log(config.data)
-          callback(config.data)
-        }
+        else callback(simpread.data)
       },
       search: (_, input: string, callback: (arg: any[]) => void) => {
         if (input.startsWith('#')) {
           const tags: string[] = input.split(' ').map((it) => (it.startsWith('#') ? it.slice(1) : it))
-          let result = config.data
+          let result = simpread.data
           tags
             .map((it) => new RegExp(escapeStringRegexp(it), 'i'))
             .forEach(
@@ -39,7 +38,7 @@ window.exports = {
           callback(result)
         } else {
           const keywords = input.split(' ')
-          let result = config.data
+          let result = simpread.data
           keywords
             .map((it) => new RegExp(escapeStringRegexp(it), 'i'))
             .forEach(
@@ -73,15 +72,26 @@ window.exports = {
     mode: 'list',
     args: {
       enter: (action, callback) => {
-        const configPath = utools.db.get('config')?.configPath
-        callback([
-          {
-            title: configPath ? '当前配置文件路径' : '请在搜索栏输入配置文件路径',
-            description: configPath
-          }
-        ])
+        callback(
+          Object.keys(config.data).map((key) => ({
+            title: config.readable[key] ?? '未知设置',
+            description: config.data[key],
+            key
+          }))
+        )
       },
       search: (action, input, callback) => {
+        const regex = new RegExp(escapeStringRegexp(input), 'i')
+        callback(
+          Object.keys(config.data)
+            .filter((it) => regex.test(it) || regex.test(config.readable[it]))
+            .map((key) => ({
+              title: config.readable[key] ?? '未知设置',
+              description: config.data[key],
+              key
+            }))
+        )
+
         if (input.length)
           try {
             require(input)

@@ -20,6 +20,7 @@
     "electron": "^19.0.5",
     "esbuild": "^0.14.47",
     "escape-string-regexp": "5",
-    "normalize-url": "^7.0.3"
+    "normalize-url": "^7.0.3",
+    "open": "^8.4.0"
   }
 }

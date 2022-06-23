@@ -1,48 +1,24 @@
-import { Simpread } from './simpread'
-import normalizeUrl from 'normalize-url'
-import { FSWatcher, readFileSync, watch } from 'fs'
+import { AppName } from 'open'
 
-const DEFAULT_ICON = 'https://simpread-1254315611.cos.ap-shanghai.myqcloud.com/mobile/apple-icon-180x180.png'
-
-export const filterBlank = (input: string): string | null => input?.trim() ?? null
-
-interface Article {
-  id: number
-  title: string
-  description: string
-  note: string
-  icon: string
-  url: string
-  tags: Simpread.Tag[]
-  annotations: Simpread.Annotation[]
+interface Config {
+  configPath: string
+  useUrlScheme: boolean
+  browser: AppName | string
 }
 
-const transformConfig = (config: Simpread.Config): Article[] =>
-  config.unrdist.map((it) => ({
-    id: it.idx,
-    title: it.title,
-    description: it.desc ?? '',
-    note: it.note ?? '',
-    icon: filterBlank(it.favicon) ? normalizeUrl(it.favicon) : DEFAULT_ICON,
-    url: normalizeUrl(it.url),
-    tags: it.tags,
-    annotations: it.annotations?.map((annotation) => ({
-      id: annotation.id,
-      note: annotation.note,
-      tags: annotation.tags
-    }))
-  }))
+export let data: Config
 
-let watcher: FSWatcher
+export const readable = {
+  configPath: '配置文件路径',
+  useUrlScheme: '使用 URL Scheme',
+  browser: '浏览器（firefox、edge、chrome 等）'
+}
 
-const readConfig = (path: string) => (data = transformConfig(JSON.parse(readFileSync(path, { encoding: 'utf-8' }))))
-
-export let data: Article[]
-
-export function load(path?: string) {
-  watcher?.close()
-  path = filterBlank(path)
-  if (!path) return
-  readConfig(path)
-  watcher = watch(path, () => readConfig(path))
+export function load() {
+  data = {
+    browser: undefined,
+    configPath: undefined,
+    useUrlScheme: true,
+    ...utools.db.get('config')
+  }
 }
