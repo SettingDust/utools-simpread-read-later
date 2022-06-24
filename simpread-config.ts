@@ -9,8 +9,9 @@ export const filterBlank = (input: string): string | undefined => {
   return trimmed?.length ? trimmed : undefined
 }
 
-const normalizeOptions: Options = {
-  stripWWW: false
+export const normalizeOptions: Options = {
+  stripWWW: false,
+  removeTrailingSlash: false
 }
 
 export interface Article {

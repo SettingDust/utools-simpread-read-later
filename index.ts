@@ -4,7 +4,7 @@ import * as simpread from './simpread-config'
 import { ListExport } from './types/utools'
 import open from 'open'
 import normalizeUrl from 'normalize-url'
-import { filterBlank } from './simpread-config'
+import { filterBlank, normalizeOptions } from './simpread-config'
 
 const exports: {
   'simpread-read-later': ListExport<undefined, simpread.Article>
@@ -171,9 +171,7 @@ const exports: {
         if (action.payload) {
           const localConfig = utools.db.get('config') ?? { _id: 'config' }
           if (action.payload === 'prefixUrl')
-            item.value = normalizeUrl(item.value, {
-              stripWWW: false
-            })
+            item.value = normalizeUrl(item.value, normalizeOptions)
           if (action.payload === 'useUrlScheme') item.value = item.value !== 'false'
           localConfig[action.payload] = item.value
           utools.db.put(localConfig)
