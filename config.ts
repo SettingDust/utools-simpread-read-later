@@ -34,7 +34,7 @@ export function load() {
   data = {
     browser: undefined,
     configPath: undefined,
-    useUrlScheme: true,
+    useUrlScheme: !utools.isLinux(),
     prefixUrl: 'http://localhost',
     ...utools.db.get('config')
   }
