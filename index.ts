@@ -54,10 +54,28 @@ const exports: {
         }
       },
       select: async (action, item) => {
-        const url = config.data.useUrlScheme
-          ? `simpread://open?type=unread&idx=${item.id}`
-          : `${config.data.prefixUrl}:${simpread.port}/${item.id}`
-        await open(url, { app: { name: open.apps[config.data.browser] ?? config.data.browser }, wait: true })
+        const pageUrl = `${config.data.prefixUrl}:${simpread.port}/reading/${item.id}`
+        const urlScheme = `simpread://open?type=unread&idx=${item.id}`
+        const browser = open.apps[config.data.browser] ?? config.data.browser
+        fetch(pageUrl)
+          .then((it) => it.json())
+          .then(async (it) => {
+            if (it.code)
+              if (config.data.useUrlScheme) await open(urlScheme)
+              else {
+                await open(item.url, {
+                  app: { name: browser }
+                })
+              }
+          })
+          .catch(async () => {
+            if (config.data.useUrlScheme) await open(urlScheme)
+            else {
+              await open(pageUrl, {
+                app: { name: browser }
+              })
+            }
+          })
       },
       placeholder: '输入搜索内容，# 开头搜索标签'
     }
