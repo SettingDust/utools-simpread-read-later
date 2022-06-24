@@ -25,7 +25,9 @@ const fetchArticle = (config: Simpread.Config): Article[] =>
     let icon
     try {
       icon = filterBlank(it.favicon) ? normalizeUrl(it.favicon) : DEFAULT_ICON
-    } catch (ignored) {}
+    } catch (ignored) {
+      icon = DEFAULT_ICON
+    }
 
     let url
     try {
@@ -51,9 +53,11 @@ let watcher: FSWatcher
 
 const readConfig = (path: string) => {
   try {
+    delete require.cache[require.resolve(path)];
     const simpreadConfig: Simpread.Config = require(path)
     data = fetchArticle(simpreadConfig)
     port = simpreadConfig.option.remote.port
+    console.log(data)
   } catch (err) {
     console.error(err)
   }
