@@ -170,7 +170,10 @@ const exports: {
       select: (action, item) => {
         if (action.payload) {
           const localConfig = utools.db.get('config') ?? { _id: 'config' }
-          if (action.payload === 'prefixUrl') item.value = normalizeUrl(item.value)
+          if (action.payload === 'prefixUrl')
+            item.value = normalizeUrl(item.value, {
+              stripWWW: false
+            })
           if (action.payload === 'useUrlScheme') item.value = item.value !== 'false'
           localConfig[action.payload] = item.value
           utools.db.put(localConfig)

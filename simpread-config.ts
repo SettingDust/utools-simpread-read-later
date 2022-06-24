@@ -1,5 +1,5 @@
 import { Simpread } from './types/simpread'
-import normalizeUrl from 'normalize-url'
+import normalizeUrl, { Options } from 'normalize-url'
 import { FSWatcher, watch } from 'fs'
 
 const DEFAULT_ICON = 'https://simpread-1254315611.cos.ap-shanghai.myqcloud.com/mobile/apple-icon-180x180.png'
@@ -7,6 +7,10 @@ const DEFAULT_ICON = 'https://simpread-1254315611.cos.ap-shanghai.myqcloud.com/m
 export const filterBlank = (input: string): string | undefined => {
   const trimmed = input?.trim()
   return trimmed?.length ? trimmed : undefined
+}
+
+const normalizeOptions: Options = {
+  stripWWW: false
 }
 
 export interface Article {
@@ -24,14 +28,14 @@ const fetchArticle = (config: Simpread.Config): Article[] =>
   config.unrdist.map((it) => {
     let icon
     try {
-      icon = filterBlank(it.favicon) ? normalizeUrl(it.favicon) : DEFAULT_ICON
+      icon = filterBlank(it.favicon) ? normalizeUrl(it.favicon, normalizeOptions) : DEFAULT_ICON
     } catch (ignored) {
       icon = DEFAULT_ICON
     }
 
     let url
     try {
-      url = normalizeUrl(it.url)
+      url = normalizeUrl(it.url, normalizeOptions)
     } catch (ignored) {}
     return {
       id: it.idx,
@@ -53,7 +57,7 @@ let watcher: FSWatcher
 
 const readConfig = (path: string) => {
   try {
-    delete require.cache[require.resolve(path)];
+    delete require.cache[require.resolve(path)]
     const simpreadConfig: Simpread.Config = require(path)
     data = fetchArticle(simpreadConfig)
     port = simpreadConfig.option.remote.port
