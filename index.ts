@@ -61,12 +61,9 @@ const exports: {
           .then((it) => it.json())
           .then(async (it) => {
             if (it.code)
-              if (config.data.useUrlScheme) await open(urlScheme)
-              else {
-                await open(item.url, {
-                  app: { name: browser }
-                })
-              }
+              await open(item.url, {
+                app: { name: browser }
+              })
           })
           .catch(async () => {
             if (config.data.useUrlScheme) await open(urlScheme)
