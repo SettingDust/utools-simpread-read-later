@@ -1,7 +1,7 @@
 {
   "pluginName": "Simpread Read Later",
   "description": "Searching for simpread read later",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "author": "SettingDust",
   "logo": "logo.png",
   "update": false,

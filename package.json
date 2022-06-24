@@ -1,6 +1,6 @@
 {
   "name": "simpread-read-later",
-  "version": "0.1.0",
+  "version": "0.2.2",
   "description": "utools plugin for search in simpread read later",
   "main": "index.js",
   "author": "SettingDust",
